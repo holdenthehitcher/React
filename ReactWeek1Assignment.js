@@ -11,10 +11,6 @@ class Bootcamp extends Student {
         this.name = name;
         this.level = level;
         this.students = students;
-        if (students === 'null') {
-            students = []}
-        }
-    registerStudent(student){
-        const newStudents = students.filter(n => n ==)
     }
+
 };
