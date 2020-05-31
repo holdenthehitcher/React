@@ -1,23 +1,23 @@
-import React, { Component } from "react";
+import React from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 import { formatDate, toSentenceCase } from "../shared/helpers";
 
-export default class CampsiteInfo extends Component {
-  renderCampsite({ image, name, description }) {
+
+function RenderCampsite({campsite}) {
     return (
       <div className="col-md-5 m-1">
         <Card>
-          <CardImg top src={image} alt={name} />
+          <CardImg top src={campsite.image} alt={campsite.name} />
           <CardBody>
-            <CardTitle>{name}</CardTitle>
-            <CardText>{description}</CardText>
+            <CardTitle>{campsite.name}</CardTitle>
+            <CardText>{campsite.description}</CardText>
           </CardBody>
         </Card>
       </div>
     );
   }
 
-  renderComments(comments) {
+function RenderComments({comments}) {
     return comments ? (
       <div className="col-md-5 m-1">
         <h4>Comments</h4>
@@ -37,14 +37,18 @@ export default class CampsiteInfo extends Component {
     );
   }
 
-  render() {
-    const { campsite } = this.props;
+function CampsiteInfo(props) {
+    const { campsite } = props;
     return campsite ? (
-      <div className="row">
-        {this.renderCampsite(campsite)} {this.renderComments(campsite.comments)}
+      <div className="container">
+        <div className="row">
+          <RenderCampsite campsite={props.campsite} />
+          <RenderComments comments={props.campsite.comments} />
+        </div>
       </div>
     ) : (
       <div />
     );
   }
-}
+
+export default CampsiteInfo;
