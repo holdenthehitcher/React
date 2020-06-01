@@ -22,10 +22,12 @@ class Header extends Component {
     return (
       <React.Fragment>
         <Jumbotron fluid>
-          <div className="row">
-            <div className="col">
-              <h1>Nucamp</h1>
-              <h2>a better way to camp</h2>
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <h1>Nucamp</h1>
+                <h2>a better way to camp</h2>
+              </div>
             </div>
           </div>
         </Jumbotron>
@@ -44,17 +46,17 @@ class Header extends Component {
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/directory">
-                    <i className="fa fa-home fa-lg" /> Directory
+                    <i className="fa fa-list fa-lg" /> Directory
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/aboutus">
-                    <i className="fa fa-home fa-lg" /> About
+                    <i className="fa fa-info fa-lg" /> About
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/contactus">
-                    <i className="fa fa-home fa-lg" /> Contact Us
+                    <i className="fa fa-address-card fa-lg" /> Contact Us
                   </NavLink>
                 </NavItem>
               </Nav>
