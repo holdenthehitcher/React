@@ -42,3 +42,8 @@ h2 {
 .navbar-dark {
   background-color: #901cad;
 }
+
+.list-horizontal li {
+  display: inline-block;
+  padding-left: 8px;
+}
