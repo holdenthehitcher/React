@@ -2,6 +2,21 @@ import React from "react";
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from "reactstrap";
 import { Link } from "react-router-dom";
 
+function RenderPartner({ partner }) {
+  if (partner) {
+    const { img, name, description } = partner;
+    return (
+      <>
+        <Media object src={img} alt={name} width="150" />
+        <Media body className="ml-5 mb-4">
+          <Media heading>{name}</Media>
+          <Media heading>{description}</Media>
+        </Media>
+      </>
+    );
+  } else return <div />;
+}
+
 function About(props) {
   const partners = (props.partners || []).map((partner) => {
     return <h5>{partner.name}</h5>;
