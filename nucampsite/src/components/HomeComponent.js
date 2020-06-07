@@ -1,34 +1,26 @@
 import React from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
-function RenderCard({ item }) {
-  return (
-    <Card>
-      <CardImg src={item.image} alt={item.name} />
-      <CardBody>
-        <CardTitle>{item.name}</CardTitle>
-        <CardText>{item.description}</CardText>
-      </CardBody>
-    </Card>
-  );
-}
+const RenderCard = ({ item: { image, name, description } }) => (
+  <Card>
+    <CardImg src={image} alt={name} />
+    <CardBody>
+      <CardTitle>{name}</CardTitle>
+      <CardText>{description}</CardText>
+    </CardBody>
+  </Card>
+);
 
-function Home(props) {
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md m-1">
-          <RenderCard item={props.campsite} />
+const Home = ({ campsite, promotion, partner }) => (
+  <div className="container">
+    <div className="row">
+      {[campsite, promotion, partner].map((data, i) => (
+        <div key={i} className="col-md m-1">
+          <RenderCard item={data} />
         </div>
-        <div className="col-md m-1">
-          <RenderCard item={props.promotion} />
-        </div>
-        <div className="col-md m-1">
-          <RenderCard item={props.partner} />
-        </div>
-      </div>
+      ))}
     </div>
-  );
-}
+  </div>
+);
 
 export default Home;
