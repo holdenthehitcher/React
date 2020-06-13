@@ -1,7 +1,15 @@
-import React from "react";
-import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import React, { Component } from "react";
+import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Button } from "reactstrap";
 import { formatDate, toSentenceCase } from "../shared/helpers";
 import { Link } from "react-router-dom";
+
+class CommentForm extends Component {
+  render() {
+    return (
+      <Button outline><i className="fa fa-pencil"/> Submit Comment</Button>
+    )
+  }
+}
 
 function RenderCampsite({ campsite }) {
   return (
@@ -31,6 +39,7 @@ function RenderComments({ comments }) {
             </div>
           );
         })}
+        <CommentForm />
       </div>
     );
   }
