@@ -16,8 +16,8 @@ import {
 } from "reactstrap";
 import { LocalForm, Control, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
+import { Loading } from "./LoadingComponent";
 
-import { formatDate, toSentenceCase } from "../shared/helpers";
 import { required, minLength, maxLength } from "../shared/validation";
 
 class CommentForm extends Component {
@@ -27,8 +27,12 @@ class CommentForm extends Component {
 
   toggleModal = () => this.setState({ isModalOpen: !this.state.isModalOpen });
 
-  handleSubmit = (values) => alert(JSON.stringify(values));
-
+  handleSubmit(values) {
+    this.toggleModal();
+    this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
+    console.log(values);
+    console.log(this.props.addComment(values));
+  }
 
   render() {
     return (
@@ -52,15 +56,15 @@ class CommentForm extends Component {
                 </Col>
               </Row>
               <Row className="form-group">
-                <Label htmlFor="yourName" md={2}>
+                <Label htmlFor="author" md={2}>
                   Your Name
                 </Label>
                 <Col md={10}>
                   <Control.text
-                    model=".yourName"
+                    model=".author"
                     className="form-control"
-                    id="yourName"
-                    name="yourName"
+                    id="author"
+                    name="author"
                     placeholder="Your Name"
                     validators={{
                       required,
@@ -70,7 +74,7 @@ class CommentForm extends Component {
                   />
                   <Errors
                     className="text-danger"
-                    model=".yourName"
+                    model=".author"
                     show="touched"
                     component="div"
                     messages={{
@@ -82,11 +86,11 @@ class CommentForm extends Component {
                 </Col>
               </Row>
               <Row row>
-                <Label htmlFor="comment" md={2}>
+                <Label htmlFor="text" md={2}>
                   Comment
                 </Label>
                 <Col md={10}>
-                  <Control.textarea model=".comment" id="comment" name="comment" rows="12" className="form-control" />
+                  <Control.textarea model=".text" id="text" name="text" rows="12" className="form-control" />
                 </Col>
               </Row>
               <Row className="form-group">
@@ -120,7 +124,7 @@ function RenderCampsite({ campsite }) {
   );
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, campsiteId }) {
   if (comments) {
     return (
       <div className="col-md-5 m-1">
@@ -128,14 +132,18 @@ function RenderComments({ comments }) {
         {comments.map((comment) => {
           return (
             <div key={comment.id}>
-              <p>{toSentenceCase(comment.text)}</p>
               <p>
-                -- {comment.author} {formatDate(comment.date)}
+                {comment.text}
+                <br />
+                -- {comment.author},{" "}
+                {new Intl.DateTimeFormat("en-US", { year: "numeric", month: "short", day: "2-digit" }).format(
+                  new Date(Date.parse(comment.date))
+                )}
               </p>
             </div>
           );
         })}
-        <CommentForm />
+        <CommentForm campsiteId={campsiteId} addComment={addComment} />
       </div>
     );
   }
@@ -143,6 +151,26 @@ function RenderComments({ comments }) {
 }
 
 function CampsiteInfo(props) {
+  if (props.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  }
+  if (props.errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <h4>{props.errMess}</h4>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (props.campsite) {
     return (
       <div className="container">
@@ -160,7 +188,7 @@ function CampsiteInfo(props) {
         </div>
         <div className="row">
           <RenderCampsite campsite={props.campsite} />
-          <RenderComments comments={props.comments} />
+          <RenderComments comments={props.comments} addComment={props.addComment} campsiteId={props.campsite.id} />
         </div>
       </div>
     );
