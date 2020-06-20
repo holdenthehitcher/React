@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Breadcrumb, BreadcrumbItem, Button, Label, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Control, Form, Errors, actions } from "react-redux-form";
+import { Control, Form, Errors } from "react-redux-form";
 import { required, minLength, maxLength, isNumber, validEmail } from "../shared/validation";
 
 class Contact extends Component {
