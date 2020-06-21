@@ -8,7 +8,14 @@ import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { postComment, fetchCampsites, fetchComments, fetchPromotions, fetchPartners } from "../redux/ActionCreators";
+import {
+  postComment,
+  fetchCampsites,
+  fetchComments,
+  fetchPromotions,
+  fetchPartners,
+  postFeedback,
+} from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -23,6 +30,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   postComment: (campsiteId, rating, author, text) => postComment(campsiteId, rating, author, text),
+  postFeedback: (feedback) => postFeedback(feedback),
   fetchCampsites: () => fetchCampsites(),
   resetFeedbackForm: () => actions.reset("feedbackForm"),
   fetchComments: () => fetchComments(),
@@ -81,7 +89,9 @@ class Main extends Component {
               <Route
                 exact
                 path="/contactus"
-                render={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />}
+                render={() => (
+                  <Contact postFeedback={this.props.postFeedback} resetFeedbackForm={this.props.resetFeedbackForm} />
+                )}
               />
               <Redirect to="/home" />
             </Switch>

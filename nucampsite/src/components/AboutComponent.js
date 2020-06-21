@@ -2,14 +2,15 @@ import React from "react";
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
-
+import { baseUrl } from "../shared/baseUrl";
+import { Fade, Stagger } from "react-animation-components";
 
 function RenderPartner({ partner }) {
   if (partner) {
     const { image, name, description } = partner;
     return (
       <>
-        <Media object src={image} alt={name} width="150" />
+        <Media object src={baseUrl + image} alt={name} width="150" />
         <Media body className="ml-5 mb-4">
           <Media heading>{name}</Media>
           <Media>{description}</Media>
@@ -20,10 +21,12 @@ function RenderPartner({ partner }) {
 }
 
 function PartnerList(props) {
-  const partners = (props.partners || []).map((partner) => (
-    <Media tag="li" key={partner.id}>
-      <RenderPartner partner={partner} />
-    </Media>
+  const partners = (props.partners.partners || []).map((partner) => (
+    <Fade in key={partner.id}>
+      <Media tag="li">
+        <RenderPartner partner={partner} />
+      </Media>
+    </Fade>
   ));
 
   if (props.partners.isLoading) {
@@ -46,7 +49,9 @@ function PartnerList(props) {
   }
   return (
     <div className="col mt-4">
-      <Media list>{props.partners}</Media>
+      <Media list>
+        <Stagger in>{partners}</Stagger>
+      </Media>
     </div>
   );
 }
